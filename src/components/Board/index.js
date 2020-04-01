@@ -80,11 +80,7 @@ function UncontrolledBoard({
   function handleCardAdd(column, card, options = {}) {
     const boardWithNewCard = addCard(board, column, card, options)
 
-    onCardNew(
-      boardWithNewCard,
-      boardWithNewCard.columns.find(({ id }) => id === column.id),
-      card
-    )
+    onCardNew(boardWithNewCard, boardWithNewCard.columns.find(({ id }) => id === column.id), card)
     setBoard(boardWithNewCard)
   }
 
@@ -95,11 +91,7 @@ function UncontrolledBoard({
 
   function handleCardRemove(column, card) {
     const boardWithoutCard = removeCard(board, column, card)
-    onCardRemove(
-      boardWithoutCard,
-      boardWithoutCard.columns.find(({ id }) => id === column.id),
-      card
-    )
+    onCardRemove(boardWithoutCard, boardWithoutCard.columns.find(({ id }) => id === column.id), card)
     setBoard(boardWithoutCard)
   }
 
@@ -156,6 +148,7 @@ function ControlledBoard({
   onNewColumnConfirm,
   onColumnRemove,
   renderColumnHeader,
+  renderColumnFooter,
   allowRemoveColumn,
   allowRenameColumn,
   onColumnRename,
@@ -183,6 +176,7 @@ function ControlledBoard({
         return <ColumnAdder onConfirm={title => onNewColumnConfirm({ title, cards: [] })} />
       }}
       {...(renderColumnHeader && { renderColumnHeader: renderColumnHeader })}
+      renderColumnFooter={renderColumnFooter}
       renderCard={(_column, card, dragging) => {
         if (renderCard) return renderCard(card, { dragging })
         return (
@@ -209,6 +203,7 @@ function BoardContainer({
   disableColumnDrag,
   disableCardDrag,
   renderColumnHeader,
+  renderColumnFooter,
   renderColumnAdder,
   allowRemoveColumn,
   onColumnRemove,
@@ -253,6 +248,7 @@ function BoardContainer({
                   </DefaultColumnHeader>
                 )
               }
+              renderColumnFooter={column => renderColumnFooter && renderColumnFooter(column)}
               disableColumnDrag={disableColumnDrag}
               disableCardDrag={disableCardDrag}
               onCardNew={onCardNew}

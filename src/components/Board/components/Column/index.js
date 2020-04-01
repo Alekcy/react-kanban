@@ -16,6 +16,7 @@ function Column({
   index: columnIndex,
   renderCard,
   renderColumnHeader,
+  renderColumnFooter,
   disableColumnDrag,
   disableCardDrag,
   onCardNew,
@@ -59,6 +60,7 @@ function Column({
                 <div className='react-kanban-card-skeleton' />
               )}
             </DroppableColumn>
+            {renderColumnFooter && renderColumnFooter(children)}
           </div>
         )
       }}
